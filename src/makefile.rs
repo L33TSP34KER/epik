@@ -95,7 +95,7 @@ pub fn add_files_to_src(makefile: String, files: Vec<String>) {
     }
 
     if start == 0 && stop == 0 {
-        panic!("can't find the SRC part of the makefile");
+        crate::errors::error("can't find the SRC part of the makefile");
     }
 
     for i in start..stop {

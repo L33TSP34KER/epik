@@ -1,11 +1,12 @@
 mod menu;
+mod errors;
 mod utils;
 mod makefile;
 use makefile::Makefile;
 use clap::{Parser, Subcommand};
+use std::{fs, io::{self, Write}};
 
 const BOLD: &str    = "\x1b[1m";
-use std::{fs, io::{self, Write}};
 const CYAN: &str    = "\x1b[36m";
 const RESET: &str   = "\x1b[0m";
 
@@ -76,7 +77,7 @@ fn main() {
                 println!("{BOLD} {CYAN}the Makefile as been updated{RESET}");
                 return;
             };
-            panic!("Makefile not found try to create a makefile or use epik init");
+            errors::error("Makefile not found try to create a makefile or use epik init");
         }
         Commands::AddFlags { flags } => {
             println!("Running `epik add-flags` with: {:?}", flags);
