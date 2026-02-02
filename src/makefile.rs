@@ -79,31 +79,31 @@ re: clean all
 }
 
 pub fn add_files_to_src(makefile: String, files: Vec<String>) {
-        let mut files: String = format!("SRC = {}", files.join(" \\\n\t"));
-        let mut makefile: Vec<&str> = makefile.split("\n").collect();
-        let mut start: usize = 0;
-        let mut stop: usize = 0;
+    let mut files: String = format!("SRC = {}", files.join(" \\\n\t"));
+    let mut makefile: Vec<&str> = makefile.split("\n").collect();
+    let mut start: usize = 0;
+    let mut stop: usize = 0;
 
-        for i in 0..makefile.len() {
-            if makefile[i].contains("SRC =") {
-                start = i;
-            }
-
-            if makefile[i].is_empty() && start != 0{
-                stop = i;
-                break;
-            }
+    for i in 0..makefile.len() {
+        if makefile[i].contains("SRC =") {
+            start = i;
         }
 
-        if start == 0 && stop == 0 {
-            panic!("can't find the SRC part of the makefile");
+        if makefile[i].is_empty() && start != 0{
+            stop = i;
+            break;
         }
-
-        for i in start..stop {
-            makefile.remove(start);
-        }
-
-        makefile.insert(start, files.as_str());
-        let result = makefile.join("\n");
-        let _ = fs::write("Makefile", result);
     }
+
+    if start == 0 && stop == 0 {
+        panic!("can't find the SRC part of the makefile");
+    }
+
+    for i in start..stop {
+        makefile.remove(start);
+    }
+
+    makefile.insert(start, files.as_str());
+    let result = makefile.join("\n");
+    let _ = fs::write("Makefile", result);
+}
