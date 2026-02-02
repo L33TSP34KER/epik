@@ -122,22 +122,5 @@ MIT License — See [LICENSE](LICENSE) for details.
 
 ---
 
-## 📬 Contact
-
-If you have any questions, suggestions, or just want to say hi:
-
-- GitHub: [https://github.com/yourusername/epik](https://github.com/yourusername/epik)
-- Email: your.email@example.com
-
----
-
-## 🙌 Thanks
-
-Thank you for using Epik — let’s make C/C++ project setup easier, one Makefile at a time!
-
-> *“Epik” = Easy Project Initiation Kit — because no one should waste time writing Makefiles.* 🎯
-
----
-
 *Made with ❤️ and 💻 in Rust*  
 *CLI Tool | C/C++ Project Automation | MIT Licensed*
