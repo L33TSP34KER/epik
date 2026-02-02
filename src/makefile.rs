@@ -56,7 +56,6 @@ LDFLAGS =
 NAME = {}
 CC = {}
 
-
 all: $(NAME)
 
 $(NAME): $(OBJ)
