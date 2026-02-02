@@ -127,9 +127,6 @@ Epik uses a modular Rust architecture:
 
 ## 📚 Roadmap
 
-- [ ] Support for C++ files (`.cpp`, `.cc`, `.cxx`).
-- [ ] Support for custom compiler (e.g., `clang`, `gcc`, `icl`).
-- [ ] Support for linking libraries (`.a`, `.so`, `.lib`).
 - [ ] Support for `Makefile` templates (e.g., for different project types).
 - [ ] `epik remove-flag` — Remove flags from Makefile.
 - [ ] `epik list-files` — List all source files in Makefile.
