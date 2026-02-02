@@ -95,36 +95,6 @@ epik add-flags -O2 -g -Wall -Wextra
 
 ---
 
-## 📄 Example Makefile Output
-
-After running `epik init`, your `Makefile` might look like this:
-
-```makefile
-CC = gcc
-CFLAGS = -Wall -O2
-
-all: main
-
-main: main.c utils.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-clean:
-	rm -f main
-```
-
----
-
-## 🛠️ How It Works
-
-Epik uses a modular Rust architecture:
-
-- `mod menu;` — CLI command routing and UX.
-- `mod utils;` — File system helpers (e.g., `collect_c_files`).
-- `mod makefile;` — Core logic for parsing and generating Makefiles.
-- `Makefile` struct — Represents the state of your Makefile.
-
----
-
 ## 📚 Roadmap
 
 - [ ] Support for `Makefile` templates (e.g., for different project types).
