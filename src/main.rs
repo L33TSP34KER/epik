@@ -1,15 +1,18 @@
-mod menu;
 mod errors;
-mod utils;
 mod makefile;
-use makefile::Makefile;
+mod menu;
+mod utils;
+mod colors;
+
+use colors::{*};
 use clap::{Parser, Subcommand};
-use std::{fs, io::{self, Write}};
+use makefile::Makefile;
+use std::{
+    fs,
+    io::{self, Write},
+};
 
-const BOLD: &str    = "\x1b[1m";
-const CYAN: &str    = "\x1b[36m";
-const RESET: &str   = "\x1b[0m";
-
+///
 /// Epik CLI
 #[derive(Parser, Debug)]
 #[command(
@@ -33,13 +36,8 @@ enum Commands {
     },
 
     /// Update a file or add a new one
-    ///
-    /// `epik update-file` and `epik add` are treated the same here
-    #[command(alias = "add")]
-    UpdateFile {
-        /// Path to the file to update/add
-        force: Option<bool>,
-    },
+    #[command(alias = "update")]
+    UpdateFile,
 
     /// Add multiple flags
     AddFlags {
@@ -62,7 +60,7 @@ fn main() {
     match cli.command {
         Commands::Init { name } => {
             println!("Running `epik init` for project: {:?}", name);
-            menu::make_base(&mut makefile);
+            menu::make_base(&mut makefile, name);
             let files = utils::collect_c_files(".");
             for i in files {
                 makefile.add_file(&i);
@@ -70,7 +68,7 @@ fn main() {
             let _ = fs::write("Makefile", makefile.compile());
             println!("\n{BOLD}{CYAN}Done setting up your Makefile!{RESET}");
         }
-        Commands::UpdateFile { force } => {
+        Commands::UpdateFile => {
             if let Ok(makefile_file) = fs::read_to_string("Makefile") {
                 let files = utils::collect_c_files(".");
                 makefile::add_files_to_src(makefile_file, files);

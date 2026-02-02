@@ -7,10 +7,14 @@ pub struct Makefile {
     compiler: Option<String>,
 }
 
-
 impl Makefile {
     pub fn new() -> Makefile {
-        Makefile { files: vec![], flags: vec![], name: None, compiler: None }
+        Makefile {
+            files: vec![],
+            flags: vec![],
+            name: None,
+            compiler: None,
+        }
     }
 
     pub fn set_compiler(&mut self, name: &String) -> &mut Self {
@@ -38,7 +42,8 @@ impl Makefile {
         let compiler = self.compiler.clone().unwrap_or_default();
         let files = self.files.join(" \\\n\t");
         let args = self.flags.join(" ");
-        let base = format!(r#"##
+        let base = format!(
+            r#"##
 ## EPITECH PROJECT, 2026
 ## Makefile
 ## File description:
@@ -70,11 +75,11 @@ clean:
 re: clean all
 
 .PHONY: all clean re
-"#, files, args, args, name, compiler); 
+"#,
+            files, args, args, name, compiler
+        );
         return base.to_string();
     }
-
-    
 }
 
 pub fn add_files_to_src(makefile: String, files: Vec<String>) {
@@ -88,7 +93,7 @@ pub fn add_files_to_src(makefile: String, files: Vec<String>) {
             start = i;
         }
 
-        if makefile[i].is_empty() && start != 0{
+        if makefile[i].is_empty() && start != 0 {
             stop = i;
             break;
         }
