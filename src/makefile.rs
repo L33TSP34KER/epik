@@ -55,9 +55,9 @@ SRC = {}
 OBJ = $(SRC:.c=.o)
 OBJ := $(OBJ:.cpp=.o)
 
-CFLAGS = {}
-CXXFLAGS = {}
-LDFLAGS = 
+CFLAGS   = -Wall -Wextra -Werror -pedantic -march=native {}
+CXXFLAGS = -Wall -Wextra -Werror -pedantic -march=native -std=c++20 {}
+LDFLAGS  = {}
 NAME = {}
 CC = {}
 
@@ -76,7 +76,7 @@ re: clean all
 
 .PHONY: all clean re
 "#,
-            files, args, args, name, compiler
+            files, args, args, args, name, compiler
         );
         return base.to_string();
     }
