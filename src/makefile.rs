@@ -1,4 +1,4 @@
-use std::fs;
+use std::fs::{self, write};
 
 pub struct Makefile {
     files: Vec<String>,
@@ -83,7 +83,7 @@ re: clean all
 }
 
 pub fn add_files_to_src(makefile: String, files: Vec<String>) {
-    let mut files: String = format!("SRC = {}", files.join(" \\\n\t"));
+    let files: String = format!("SRC = {}", files.join(" \\\n\t"));
     let mut makefile: Vec<&str> = makefile.split("\n").collect();
     let mut start: usize = 0;
     let mut stop: usize = 0;
@@ -103,11 +103,38 @@ pub fn add_files_to_src(makefile: String, files: Vec<String>) {
         crate::errors::error("can't find the SRC part of the makefile");
     }
 
-    for i in start..stop {
+    for _ in start..stop {
         makefile.remove(start);
     }
 
     makefile.insert(start, files.as_str());
     let result = makefile.join("\n");
-    let _ = fs::write("Makefile", result);
+    if let Err(e) = fs::write("Makefile", result) {
+        crate::errors::error(&format!("Failed to write Makefile: {}", e));
+    }
+}
+
+pub fn add_flags_to_src(makefile: String, flags: Vec<String>) {
+    let flags = flags.join(" ");
+    let mut makefile: Vec<String> = makefile.lines().map(|s| s.to_owned()).collect();
+    //let mut makefile: Vec<&str> = makefile.split("\n").collect();
+    let mut index: Vec<usize> = Vec::new();
+
+    for i in 0..makefile.len() {
+        if makefile.get(i).unwrap().contains("FLAGS =") {
+            index.push(i);
+        }
+    }
+
+    for index in index {
+        let line = makefile[index].clone();
+        let new_line = format!("{line} {flags}").clone();
+        makefile.remove(index);
+        makefile.insert(index, new_line);
+    }
+
+    let result = makefile.join("\n");
+    if let Err(e) = fs::write("Makefile", result) {
+        crate::errors::error(&format!("Failed to write Makefile: {}", e));
+    }
 }

@@ -50,7 +50,7 @@ epik init my_project
 This will:
 
 - Create a `Makefile` in your current directory.
-- Detect all `.c` files in the current directory and add them to the `Makefile`.
+- Detect all `.c/cpp` files in the current directory and add them to the `Makefile`.
 - Output a success message.
 
 > If no name is provided, it defaults to the current directory name.
@@ -66,29 +66,22 @@ epik update-file
 This will:
 
 - Read your existing `Makefile`.
-- Detect all `.c` files in the current directory.
+- Detect all `.c/cpp` files in the current directory.
 - Update the `Makefile` to include any new or missing files.
 
-> Use `--force` to force update even if no changes are detected.
-
 ```bash
-epik update-file --force
+epik update-file
 ```
 
 ---
 
 ### 4. Add Compiler Flags
 
-#### Single Flag
-
-```bash
-epik add-flag -Wall
-```
-
 #### Multiple Flags
 
 ```bash
 epik add-flags -O2 -g -Wall -Wextra
+epik add-flags -O2 # work too
 ```
 
 > Flags are added to the `CFLAGS` (or `CXXFLAGS` for C++) section of your `Makefile`.
@@ -100,7 +93,6 @@ epik add-flags -O2 -g -Wall -Wextra
 - [ ] Support for `Makefile` templates (e.g., for different project types).
 - [ ] `epik remove-flag` — Remove flags from Makefile.
 - [ ] `epik list-files` — List all source files in Makefile.
-- [ ] `epik validate` — Validate Makefile syntax.
 
 ---
 

@@ -5,7 +5,7 @@ mod utils;
 mod colors;
 
 use colors::{*};
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, builder::Str};
 use makefile::Makefile;
 use std::{
     fs,
@@ -43,13 +43,7 @@ enum Commands {
     AddFlags {
         /// List of flags to add
         #[arg(value_name = "FLAG")]
-        flags: Vec<String>,
-    },
-
-    /// Add a single flag
-    AddFlag {
-        /// Name of the flag to add
-        flag: String,
+        flags: String,
     },
 }
 
@@ -78,12 +72,16 @@ fn main() {
             errors::error("Makefile not found try to create a makefile or use epik init");
         }
         Commands::AddFlags { flags } => {
-            println!("Running `epik add-flags` with: {:?}", flags);
-            // TODO: implement multi-flag logic
-        }
-        Commands::AddFlag { flag } => {
-            println!("Running `epik add-flag` with: {flag}");
-            // TODO: implement single-flag logic
+            if let Ok(makefile_file) = fs::read_to_string("Makefile") {
+                println!("{BOLD} {CYAN}the Makefile as been updated{RESET}");
+                let mut new_flags:Vec<String> = Vec::new();
+                for f in flags.split(",") {
+                    new_flags.push(f.to_string());
+                }
+                makefile::add_flags_to_src(makefile_file, new_flags);
+                return;
+            }
+            errors::error("Makefile not found try to create a makefile or use epik init");
         }
     }
 }
