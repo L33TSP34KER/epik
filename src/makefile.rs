@@ -1,4 +1,4 @@
-use std::fs::{self, write};
+use std::fs::{self};
 
 pub struct Makefile {
     files: Vec<String>,

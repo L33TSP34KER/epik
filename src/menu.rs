@@ -1,4 +1,4 @@
-use crate::colors::{*};
+use crate::colors::*;
 use crate::makefile::Makefile;
 use std::io::{self, Write};
 

@@ -1,4 +1,3 @@
-use std::path::Path;
 use walkdir::WalkDir;
 
 pub fn collect_c_files(root: &str) -> Vec<String> {

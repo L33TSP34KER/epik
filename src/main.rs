@@ -1,15 +1,14 @@
+mod colors;
 mod errors;
 mod makefile;
 mod menu;
 mod utils;
-mod colors;
 
-use colors::{*};
-use clap::{Parser, Subcommand, builder::Str};
+use clap::{Parser, Subcommand};
+use colors::*;
 use makefile::Makefile;
 use std::{
     fs,
-    io::{self, Write},
 };
 
 ///
@@ -74,7 +73,7 @@ fn main() {
         Commands::AddFlags { flags } => {
             if let Ok(makefile_file) = fs::read_to_string("Makefile") {
                 println!("{BOLD} {CYAN}the Makefile as been updated{RESET}");
-                let mut new_flags:Vec<String> = Vec::new();
+                let mut new_flags: Vec<String> = Vec::new();
                 for f in flags.split(",") {
                     new_flags.push(f.to_string());
                 }
